@@ -31,16 +31,18 @@ const BlogPostPage = () => {
     const handleDelete = async () => {
         try {
             const token = localStorage.getItem('token');
+            console.log("Lähetettävä token:", token);
             const response = await fetch(`http://localhost:5000/posts/${postId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': 'Bearer ' + token
                 }
             });
+            console.log("Vastaus status:", response.status);
             if (!response.ok) {
                 throw new Error('Virhe poistettaessa blogia');
             }
-            navigate('/dashboard'); // Ohjaa takaisin Dashboardiin
+            navigate('/dashboard');
         } catch (error) {
             console.error('Blogia poistettaessa tapahtui virhe:', error);
         }
