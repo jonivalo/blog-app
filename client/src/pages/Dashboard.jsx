@@ -1,29 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import PostForm from '../components/PostForm';
+import PostsList from '../components/PostsList';
+import TagsSidebar from '../components/TagsSidebar';
 
 const Dashboard = () => {
     const [posts, setPosts] = useState([]);
+    const [tags, setTags] = useState([]);
 
     useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const response = await fetch('http://localhost:5000/posts', {
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
-                    }
-                });
-                if (response.ok) {
-                    const data = await response.json();
-                    setPosts(data);
-                }
-            } catch (error) {
-                console.error('Virhe haettaessa postauksia:', error);
-            }
-        };
-
         fetchPosts();
+        fetchTags();
     }, []);
+
+    const fetchPosts = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/posts', {
+                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setPosts(data);
+            }
+        } catch (error) {
+            console.error('Virhe haettaessa postauksia:', error);
+        }
+    };
+
+    const fetchTags = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/tags', {
+                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setTags(data);
+            }
+        } catch (error) {
+            console.error('Virhe haettaessa tageja:', error);
+        }
+    };
 
     const handleNewPost = async (newPostData) => {
         try {
@@ -40,27 +55,26 @@ const Dashboard = () => {
                 throw new Error('Postauksen luonti epäonnistui');
             }
 
-            const post = await response.json();
-            setPosts([post, ...posts]);
+            const newPost = await response.json();
+            setPosts([newPost, ...posts]);
+
+            fetchTags();
         } catch (error) {
             console.error('Virhe luotaessa postausta:', error);
         }
     };
 
     return (
-        <div className="container mx-auto my-8 p-6">
-            <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
-
-            <PostForm onSubmit={handleNewPost} />
-
-            {posts.map((post) => (
-                <div key={post._id} className="border p-4 rounded shadow mb-4">
-                    <Link to={`/posts/${post._id}`} className="text-xl font-bold">
-                        {post.title}
-                    </Link>
-                    <p className="text-gray-600">{new Date(post.date).toLocaleDateString()}</p>
-                </div>
-            ))}
+        <div className="container mx-auto my-8 p-6 flex items-start">
+            <div className="w-1/4 pr-4">
+                <PostsList posts={posts} />
+            </div>
+            <div className="w-2/3">
+                <PostForm onSubmit={handleNewPost} />
+            </div>
+            <div className="w-1/4 pl-4">
+                <TagsSidebar tags={tags} />
+            </div>
         </div>
     );
 };
