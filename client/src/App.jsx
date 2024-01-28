@@ -8,15 +8,18 @@ import Navbar from './components/Navbar';
 import BlogPostPage from './pages/BlogPostPage';
 
 const App = () => {
+    const isLoggedIn = localStorage.getItem('token');
+
     return (
         <>
             <Navbar />
             <Routes>
-                <Route path="/" element={<Navigate to="/dashboard" />} />
+                <Route path="/" element={isLoggedIn ? <Navigate to="/dashboard" /> : <LoginPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
                 <Route path="/posts/:postId" element={<ProtectedRoute> <BlogPostPage /></ProtectedRoute>} />
+
             </Routes>
         </>
     );
