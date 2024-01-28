@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const postRoutes = require('./routes/postRoutes');
 const userRoutes = require('./routes/userRoutes');
+const tagRoutes = require('./routes/tagRoutes');
 
 const app = express();
 
@@ -25,6 +26,7 @@ mongoose.connect(process.env.MONGODB_URI)
 
 app.use('/posts', postRoutes);
 app.use('/users', userRoutes);
+app.use('/tags', tagRoutes);
 
 app.get('/', (req, res) => res.send('Blogi API toimii'));
 
