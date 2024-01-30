@@ -40,8 +40,18 @@ exports.login = async (req, res) => {
 
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
 
+        //res.json({ token, username: user.username });
         res.json({ token });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
+// exports.getCurrentUser = async (req, res) => {
+//     try {
+//         const user = await User.findById(req.user._id).select('-password');
+//         res.json(user);
+//     } catch (error) {
+//         res.status(500).send(error.message);
+//     }
+// };
