@@ -5,9 +5,9 @@ export const UserContext = createContext(null);
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
-    const login = (token) => {
+    const login = async (token) => {
         localStorage.setItem('token', token);
-        setUser({ token });
+        setUser(true);
     };
 
     const logout = () => {
