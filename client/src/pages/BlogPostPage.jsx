@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 
 const BlogPostPage = () => {
     const { postId } = useParams();
@@ -22,11 +22,12 @@ const BlogPostPage = () => {
                 setPost(data);
             } catch (error) {
                 console.error('Virhe haettaessa blogia:', error);
+                navigate('/dashboard');
             }
         };
 
         fetchPost();
-    }, [postId]);
+    }, [postId, navigate]);
 
     const handleDelete = async () => {
         try {
@@ -51,12 +52,15 @@ const BlogPostPage = () => {
     if (!post) return <div>Ladataan...</div>;
 
     return (
-        <div className="container mx-auto my-8 p-6">
-            <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
-            <p>{post.content}</p>
-            <button onClick={handleDelete} className="bg-red-500 text-white p-2 rounded mt-4">
-                Poista Blogi
-            </button>
+        <div className="container mx-auto my-8">
+            <div className="bg-white shadow rounded p-6 max-w-2xl mx-auto relative">
+                <Link to="/dashboard" className="text-blue-500 hover:text-blue-700 mb-4 inline-block">Takaisin</Link>
+                <h1 className="text-3xl font-bold mb-4 text-center">{post.title}</h1>
+                <p className="mb-4">{post.content}</p>
+                <button onClick={handleDelete} className="bg-red-500 hover:bg-red-700 text-white p-2 rounded absolute right-4 bottom-4">
+                    Poista Blogi
+                </button>
+            </div>
         </div>
     );
 };

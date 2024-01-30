@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom';
 const PostsList = ({ posts }) => {
     if (!posts.length) return <div>No posts yet</div>;
 
+    const sortedPosts = posts.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
+
     return (
         <div>
-            {posts.map(post => (
+            {sortedPosts.map(post => (
                 <div key={post._id} className="border p-4 rounded shadow mb-4">
                     <Link to={`/posts/${post._id}`} className="text-lg font-bold">
                         {post.title}
