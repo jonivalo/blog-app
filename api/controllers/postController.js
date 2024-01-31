@@ -64,3 +64,29 @@ exports.getTags = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+exports.getPostsByTag = async (req, res) => {
+    try {
+        const posts = await Post.find({ tags: req.params.tag }).populate('author', 'username');
+        res.json(posts);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+exports.updatePost = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { title, content, tags } = req.body;
+
+        const updatedPost = await Post.findByIdAndUpdate(id, { title, content, tags }, { new: true });
+
+        if (!updatedPost) {
+            return res.status(404).json({ message: 'Postausta ei löytynyt' });
+        }
+
+        res.json(updatedPost);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
