@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const postController = require('../controllers/postController');
-const authenticate = require('../middleware/authenticate');
 
-router.get('/', authenticate, postController.getTags);
+router.get('/', postController.getTags);
+router.get('/:tag', postController.getPostsByTag);
 
 module.exports = router;
