@@ -1,13 +1,34 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 export const UserContext = createContext(null);
 
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            fetchUserDetails(token);
+        }
+    }, []);
+
+    const fetchUserDetails = async (token) => {
+        try {
+            const response = await fetch('http://localhost:5000/users/me', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (response.ok) {
+                const userData = await response.json();
+                setUser(userData);
+            }
+        } catch (error) {
+            console.error('Virhe käyttäjätietojen haussa:', error);
+        }
+    };
+
     const login = async (token) => {
         localStorage.setItem('token', token);
-        setUser(true);
+        await fetchUserDetails(token);
     };
 
     const logout = () => {
