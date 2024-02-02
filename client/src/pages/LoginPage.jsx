@@ -1,11 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import AuthForm from '../components/AuthForm';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 
 const LoginPage = () => {
     const navigate = useNavigate();
-    const { login } = useContext(UserContext);
+    const { user, login } = useContext(UserContext);
+
+    useEffect(() => {
+        if (user) {
+            navigate('/dashboard');
+        }
+    }, [user, navigate]);
 
     const handleLogin = async (credentials) => {
         try {
@@ -23,7 +29,7 @@ const LoginPage = () => {
 
             const data = await response.json();
             login(data.token);
-            navigate('/dashboard');
+
         } catch (error) {
             console.error('Kirjautumisvirhe:', error);
         }
