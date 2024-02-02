@@ -16,16 +16,17 @@ const Navbar = () => {
             <div className="container mx-auto flex justify-between">
                 <Link to="/" className="font-semibold">Home</Link>
                 <div>
-
-                    {!user && (
+                    {!user ? (
                         <>
                             <Link to="/login" className="mr-4">Login</Link>
                             <Link to="/register">Register</Link>
                         </>
-                    )}
-
-                    {user && (
-                        <button onClick={handleLogout} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Logout</button>
+                    ) : (
+                        <>
+                            <Link to="/dashboard" className="mr-4">Dashboard</Link>
+                            <span className="mr-4">Tervetuloa, {user.username}</span>
+                            <button onClick={handleLogout} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Logout</button>
+                        </>
                     )}
                 </div>
             </div>
