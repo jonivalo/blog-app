@@ -1,19 +1,37 @@
 import React, { useState } from 'react';
+import { uploadImageToFirebase } from '../services/FirebaseService';
 
 const PostForm = ({ onSubmit }) => {
-  const [post, setPost] = useState({ title: '', content: '', tags: '' });
+  const [post, setPost] = useState({ title: '', content: '', tags: '', imageUrl: null });
+  const [uploadingImage, setUploadingImage] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploadingImage(true);
+    try {
+      const downloadURL = await uploadImageToFirebase(file);
+      setPost({ ...post, imageUrl: downloadURL });
+    } catch (error) {
+      console.error('Virhe ladattaessa kuvaa:', error);
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     onSubmit({
-        title: post.title,
-        content: post.content,
-        tags: post.tags.split(',').map(tag => tag.trim())
+      title: post.title,
+      content: post.content,
+      tags: post.tags.split(',').map(tag => tag.trim()),
+      imageUrl: post.imageUrl
     });
-    setPost({ title: '', content: '', tags: '' });
-};
+    setPost({ title: '', content: '', tags: '', imageUrl: null });
+  };
 
-return (
+  return (
     <form onSubmit={handleSubmit} className="max-w-2xl mx-auto my-8 bg-white p-6 shadow-lg rounded-lg">
       <div className="mb-6">
         <label htmlFor="title" className="block text-lg font-medium text-gray-700 mb-2">Post Title</label>
@@ -37,6 +55,16 @@ return (
           required
           className="w-full h-40 px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           rows="10"
+        />
+      </div>
+      <div className="mb-6">
+        <label htmlFor="image" className="block text-lg font-medium text-gray-700 mb-2">Image</label>
+        <input
+          id="image"
+          type="file"
+          onChange={handleImageChange}
+          disabled={uploadingImage}
+          className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
       </div>
       <div className="mb-6">

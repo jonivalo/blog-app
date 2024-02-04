@@ -11,7 +11,7 @@ const Home = () => {
                 const response = await fetch('http://localhost:5000/posts');
                 if (response.ok) {
                     const data = await response.json();
-                    setPosts(data);
+                    setPosts(data.sort((a, b) => new Date(b.date) - new Date(a.date)));
                 }
             } catch (error) {
                 console.error('Virhe haettaessa postauksia:', error);
@@ -46,6 +46,9 @@ const Home = () => {
                     <div className="flex flex-col items-center space-y-4">
                         {posts.map(post => (
                             <div key={post._id} className="w-full max-w-lg p-4 border rounded shadow">
+                                {post.imageUrl && (
+                                    <img src={post.imageUrl} alt={post.title} className="mb-4 max-w-full h-auto" />
+                                )}
                                 <h2 className="text-xl font-bold">{post.title}</h2>
                                 <p className="mt-2 text-gray-600">{post.content.substring(0, 100)}{post.content.length > 100 && '...'}</p>
                                 <p className="text-gray-500 text-sm mt-4">

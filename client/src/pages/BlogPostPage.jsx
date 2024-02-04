@@ -59,6 +59,11 @@ const BlogPostPage = () => {
             <div className="bg-white shadow rounded p-6 max-w-2xl mx-auto relative">
                 <Link to="/dashboard" className="text-blue-500 hover:text-blue-700 mb-4 inline-block">Takaisin</Link>
                 <h1 className="text-3xl font-bold mb-4 text-center">{post.title}</h1>
+
+                {post.imageUrl && (
+                    <img src={post.imageUrl} alt={post.title} className="mb-4 max-w-full h-auto" />
+                )}
+
                 <p className="mb-4">{post.content}</p>
                 <p className="text-gray-500 text-sm mb-4">
                     Posted in {post.tags.map((tag, index) => (
