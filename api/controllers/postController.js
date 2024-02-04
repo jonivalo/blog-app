@@ -6,7 +6,8 @@ exports.createPost = async (req, res) => {
             title: req.body.title,
             content: req.body.content,
             author: req.user._id,
-            tags: req.body.tags
+            tags: req.body.tags,
+            imageUrl: req.body.imageUrl
         });
 
         const savedPost = await newPost.save();
@@ -77,9 +78,9 @@ exports.getPostsByTag = async (req, res) => {
 exports.updatePost = async (req, res) => {
     try {
         const { id } = req.params;
-        const { title, content, tags } = req.body;
+        const { title, content, tags, imageUrl } = req.body;
 
-        const updatedPost = await Post.findByIdAndUpdate(id, { title, content, tags }, { new: true });
+        const updatedPost = await Post.findByIdAndUpdate(id, { title, content, tags, imageUrl }, { new: true });
 
         if (!updatedPost) {
             return res.status(404).json({ message: 'Postausta ei löytynyt' });
