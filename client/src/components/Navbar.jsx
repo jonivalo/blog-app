@@ -13,7 +13,7 @@ const Navbar = () => {
 
     return (
         <nav className="bg-gray-800 text-white p-4">
-            <div className="container mx-auto flex justify-between">
+            <div className="container mx-auto flex justify-between items-center">
                 <Link to="/" className="font-semibold">Home</Link>
                 <div>
                     {!user ? (
@@ -23,8 +23,7 @@ const Navbar = () => {
                         </>
                     ) : (
                         <>
-                            <Link to="/dashboard" className="mr-4">Dashboard</Link>
-                            <span className="mr-4">Tervetuloa, {user.username}</span>
+                             <Link to="/dashboard" className="mr-4 hover:underline">Tervetuloa, {user.username}</Link>
                             <button onClick={handleLogout} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Logout</button>
                         </>
                     )}
