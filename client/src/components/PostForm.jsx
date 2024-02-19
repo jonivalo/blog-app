@@ -34,7 +34,7 @@ const PostForm = ({ onSubmit }) => {
   return (
     <form onSubmit={handleSubmit} className="max-w-2xl mx-auto my-8 bg-white p-6 shadow-lg rounded-lg">
       <div className="mb-6">
-        <label htmlFor="title" className="block text-lg font-medium text-gray-700 mb-2">Post Title</label>
+        <label htmlFor="title" className="block text-lg font-medium text-gray-700 mb-2">Title</label>
         <input
           id="title"
           type="text"
@@ -74,12 +74,12 @@ const PostForm = ({ onSubmit }) => {
           type="text"
           value={post.tags}
           onChange={(e) => setPost({ ...post, tags: e.target.value })}
-          placeholder="Tags (comma separated)"
+          placeholder="Tags"
           className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
       </div>
       <button type="submit" className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out">
-        Create Post
+        Publish
       </button>
     </form>
   );

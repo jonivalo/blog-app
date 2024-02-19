@@ -52,12 +52,12 @@ const BlogPostPage = () => {
         return new Date(dateString).toLocaleDateString(undefined, options);
     };
 
-    if (!post) return <div>Ladataan...</div>;
+    if (!post) return <div>Downloading...</div>;
 
     return (
         <div className="container mx-auto my-8">
             <div className="bg-white shadow rounded p-6 max-w-2xl mx-auto relative">
-                <Link to="/dashboard" className="text-blue-500 hover:text-blue-700 mb-4 inline-block">Takaisin</Link>
+                <Link to="/dashboard" className="text-blue-500 hover:text-blue-700 mb-4 inline-block">Back to Dashboard</Link>
                 <h1 className="text-3xl font-bold mb-4 text-center">{post.title}</h1>
 
                 {post.imageUrl && (
@@ -73,9 +73,9 @@ const BlogPostPage = () => {
                     ))} on {formatDate(post.date)}
                 </p>
                 <div className="flex justify-around">
-                    <Link to={`/edit/${postId}`} className="bg-blue-500 hover:bg-blue-700 text-white p-2 rounded">Muokkaa</Link>
+                    <Link to={`/edit/${postId}`} className="bg-blue-500 hover:bg-blue-700 text-white p-2 rounded">Edit</Link>
                     <button onClick={handleDelete} className="bg-red-500 hover:bg-red-700 text-white p-2 rounded">
-                        Poista Blogi
+                        Delete
                     </button>
                 </div>
             </div>

@@ -53,7 +53,7 @@ const EditPostPage = () => {
                 <form onSubmit={handleUpdate}>
                     <div className="mb-4">
                         <label htmlFor="title" className="block text-gray-700 text-sm font-bold mb-2">
-                            Otsikko
+                            Title
                         </label>
                         <input
                             type="text"
@@ -65,7 +65,7 @@ const EditPostPage = () => {
                     </div>
                     <div className="mb-6">
                         <label htmlFor="content" className="block text-gray-700 text-sm font-bold mb-2">
-                            Sisältö
+                            Content
                         </label>
                         <textarea
                             id="content"
@@ -76,10 +76,10 @@ const EditPostPage = () => {
                     </div>
                     <div className="flex items-center justify-between">
                         <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                            Tallenna muutokset
+                            Save Changes
                         </button>
                         <Link to={`/posts/${postId}`} className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
-                            Takaisin postaukseen
+                            Back to Blog
                         </Link>
                     </div>
                 </form>

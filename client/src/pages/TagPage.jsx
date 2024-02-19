@@ -27,11 +27,11 @@ const TagPage = () => {
         fetchPostsByTag();
     }, [tag]);
 
-    if (isLoading) return <div>Ladataan...</div>;
+    if (isLoading) return <div>Downloading...</div>;
 
     return (
         <div className="container mx-auto my-8">
-            <h1 className="text-3xl font-bold mb-4">Postaukset tagilla "{tag}"</h1>
+            <h1 className="text-3xl font-bold mb-4">Blogs on "{tag}"</h1>
             {posts.length > 0 ? (
                 posts.map(post => (
                     <div key={post._id} className="border p-4 rounded shadow mb-4">
@@ -42,7 +42,7 @@ const TagPage = () => {
                     </div>
                 ))
             ) : (
-                <p>Ei postauksia tällä tagilla.</p>
+                <p>No blogs on this topic.</p>
             )}
         </div>
     );
