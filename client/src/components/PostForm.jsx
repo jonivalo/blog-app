@@ -40,7 +40,7 @@ const PostForm = ({ onSubmit }) => {
           type="text"
           value={post.title}
           onChange={(e) => setPost({ ...post, title: e.target.value })}
-          placeholder="Enter your post title here"
+          placeholder="Enter your blog title here"
           required
           className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
@@ -51,7 +51,7 @@ const PostForm = ({ onSubmit }) => {
           id="content"
           value={post.content}
           onChange={(e) => setPost({ ...post, content: e.target.value })}
-          placeholder="Write your post content here"
+          placeholder="Write your blog content here"
           required
           className="w-full h-40 px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           rows="10"

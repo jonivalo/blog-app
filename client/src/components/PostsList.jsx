@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const PostsList = ({ posts }) => {
-    if (!posts.length) return <div>No posts yet</div>;
+    if (!posts.length) return <div>No blogs yet</div>;
 
     const sortedPosts = posts.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
 
