@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AuthForm from '../components/AuthForm';
 
 const RegisterPage = () => {
+    const [formKey, setFormKey] = useState(0);
+
     const handleRegister = async (credentials) => {
         try {
             const response = await fetch('http://localhost:5000/users/register', {
@@ -16,8 +18,8 @@ const RegisterPage = () => {
                 throw new Error('Rekisteröintivirhe');
             }
 
-            const data = await response.json();
-            console.log('Rekisteröityminen onnistui:', data);
+            setFormKey(prevKey => prevKey + 1);
+            console.log('Rekisteröityminen onnistui');
 
         } catch (error) {
             console.error('Rekisteröinnissä tapahtui virhe:', error);
@@ -27,7 +29,7 @@ const RegisterPage = () => {
     return (
         <div className="container mx-auto my-10">
             <h2 className="text-2xl font-bold mb-6">Register</h2>
-            <AuthForm onSubmit={handleRegister} isRegisterForm={true} />
+            <AuthForm key={formKey} onSubmit={handleRegister} isRegisterForm={true} />
         </div>
     );
 };
