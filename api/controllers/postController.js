@@ -43,15 +43,13 @@ exports.deletePost = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
         if (!post) {
-            return res.status(404).json({ message: 'Postausta ei löytynyt' });
-        }
-
-        if (post.author.toString() !== req.user._id.toString()) {
-            return res.status(403).json({ message: 'Ei oikeuksia poistaa tätä postausta' });
+            return res.status(404).json({ message: 'Postausta ei löytynyt.' });
+        } else if (post.author.toString() !== req.user._id.toString()) {
+            return res.status(403).json({ message: 'Ei oikeuksia poistaa tätä postausta.' });
         }
 
         await Post.findByIdAndDelete(req.params.id);
-        res.status(200).json({ message: 'Postaus poistettu' });
+        res.status(200).json({ message: 'Postaus poistettu.' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -77,15 +75,16 @@ exports.getPostsByTag = async (req, res) => {
 
 exports.updatePost = async (req, res) => {
     try {
-        const { id } = req.params;
-        const { title, content, tags, imageUrl } = req.body;
+        const post = await Post.findById(req.params.id);
 
-        const updatedPost = await Post.findByIdAndUpdate(id, { title, content, tags, imageUrl }, { new: true });
-
-        if (!updatedPost) {
-            return res.status(404).json({ message: 'Postausta ei löytynyt' });
+        if (!post) {
+            return res.status(404).json({ message: 'Postausta ei löytynyt.' });
+        } else if (post.author.toString() !== req.user._id.toString()) {
+            return res.status(403).json({ message: 'Ei oikeuksia muokata tätä postausta.' });
         }
 
+        const { title, content, tags, imageUrl } = req.body;
+        const updatedPost = await Post.findByIdAndUpdate(req.params.id, { title, content, tags, imageUrl }, { new: true });
         res.json(updatedPost);
     } catch (error) {
         res.status(500).json({ message: error.message });
