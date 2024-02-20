@@ -19,10 +19,10 @@ export const UserProvider = ({ children }) => {
             });
             if (response.ok) {
                 const userData = await response.json();
-                setUser(userData);
+                setUser({ ...userData, _id: userData._id });
             }
         } catch (error) {
-            console.error('Virhe käyttäjätietojen haussa:', error);
+            console.error('Error fetching user details:', error);
         }
     };
 
