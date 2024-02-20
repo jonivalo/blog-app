@@ -10,9 +10,7 @@ exports.register = async (req, res) => {
             return res.status(400).json({ message: 'Sähköposti on jo käytössä' });
         }
 
-
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
-
 
         const user = new User({
             username: req.body.username,
@@ -21,7 +19,6 @@ exports.register = async (req, res) => {
         });
 
         const savedUser = await user.save();
-
 
         const token = jwt.sign({ userId: savedUser._id }, process.env.JWT_SECRET);
 
@@ -53,7 +50,11 @@ exports.getCurrentUser = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: 'Käyttäjää ei löytynyt' });
         }
-        res.json({ username: user.username, email: user.email });
+        res.json({
+            _id: user._id,
+            username: user.username,
+            email: user.email
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
